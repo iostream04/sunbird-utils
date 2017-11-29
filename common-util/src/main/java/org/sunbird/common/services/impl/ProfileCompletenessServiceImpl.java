@@ -9,10 +9,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 
+import org.sunbird.common.models.util.ConfigUtil;
 import org.sunbird.common.models.util.JsonKey;
+import org.sunbird.common.models.util.ProjectLogger;
 import org.sunbird.common.models.util.ProjectUtil;
-import org.sunbird.common.models.util.PropertiesCache;
 import org.sunbird.common.services.ProfileCompletenessService;
 
 /**
@@ -22,10 +24,13 @@ import org.sunbird.common.services.ProfileCompletenessService;
 public class ProfileCompletenessServiceImpl
     implements ProfileCompletenessService {
 
+  private static Map<String, Double> attributePercentageMap = new ConcurrentHashMap<>();
+
+  @SuppressWarnings("rawtypes")
   @Override
   public Map<String, Object> computeProfile(Map<String, Object> profileData) {
     Map<String, Object> response = new HashMap<>();
-    float completedCount = 0;
+    double completedCount = 0;
     if (profileData == null || profileData.size() == 0) {
       response.put(JsonKey.COMPLETENESS, (int) Math.ceil(completedCount));
       response.put(JsonKey.MISSING_FIELDS, findMissingAttribute(profileData));
@@ -62,9 +67,9 @@ public class ProfileCompletenessServiceImpl
    * @param key String
    * @return float
    */
-  private float getValue(String key) {
-    return PropertiesCache.getInstance().attributePercentageMap.get(key) != null
-        ? PropertiesCache.getInstance().attributePercentageMap.get(key) : 0;
+  private double getValue(String key) {
+    return attributePercentageMap.get(key) != null
+        ? attributePercentageMap.get(key) : 0;
   }
 
 
@@ -74,13 +79,14 @@ public class ProfileCompletenessServiceImpl
    * @param profileData Map<String, Object>
    * @return List<String>
    */
+  @SuppressWarnings("rawtypes")
   private List<String> findMissingAttribute(Map<String, Object> profileData) {
     List<String> attribute = new ArrayList<>();
-    Iterator<Entry<String, Float>> itr =
-        PropertiesCache.getInstance().attributePercentageMap.entrySet()
+    Iterator<Entry<String, Double>> itr =
+        attributePercentageMap.entrySet()
             .iterator();
     while (itr.hasNext()) {
-      Entry<String, Float> entry = itr.next();
+      Entry<String, Double> entry = itr.next();
       if (profileData==null || !profileData.containsKey(entry.getKey())) {
         attribute.add(entry.getKey());
       } else {
@@ -105,5 +111,25 @@ public class ProfileCompletenessServiceImpl
       }
     }
     return attribute;
+  }
+  
+  static {
+    List<String> keys = ConfigUtil.getStringList(JsonKey.USER_PROFILE_ATTRIBUTE);
+    List<String> values = new ArrayList<>();
+    if(ConfigUtil.config.hasPath(JsonKey.USER_PROFILE_WEIGHTAGE)){
+      values = ConfigUtil.getStringList(JsonKey.USER_PROFILE_WEIGHTAGE);
+    }
+    if (keys.size() == values.size()) {
+      // then take the value from user
+      ProjectLogger.log("weighted value is provided by user.");
+      for (int i = 0; i < keys.size(); i++)
+        attributePercentageMap.put(keys.get(i), Double.valueOf(values.get(i)));
+    } else {
+      // equally divide all the provided field.
+      ProjectLogger.log("weighted value is not provided  by user.");
+      double perc = (double) 100.0 / keys.size();
+      for (int i = 0; i < keys.size(); i++)
+        attributePercentageMap.put(keys.get(i), perc);
+    }
   }
 }

@@ -10,8 +10,22 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+/**
+ * Util class to create a excel file 
+ */
 public class ExcelFileUtil extends FileUtil {
 
+  /**
+   * Method to write data into a file
+   * 
+   * @param fileName 
+   *        String value of the name of the file to be created without specifying the type
+   *        of the file. The type of the file will be xlsx [Excel].
+   * @param dataValues 
+   *        List<List<Object>> usually the data which is in tabular form, 
+   *        where the List<Object> indicates a single row data with each column value 
+   *        and List<List<Object>> indicates the rows of the tabular data.        
+   */
   @SuppressWarnings({"resource", "unused"})
   public File writeToFile(String fileName, List<List<Object>> dataValues) {
     // Blank workbook
@@ -49,7 +63,6 @@ public class ExcelFileUtil extends FileUtil {
       file = new File(fileName + ".xlsx");
       out = new FileOutputStream(file);
       workbook.write(out);
-      // out.close();
       ProjectLogger.log("File " + fileName + " created successfully");
 
     } catch (Exception e) {

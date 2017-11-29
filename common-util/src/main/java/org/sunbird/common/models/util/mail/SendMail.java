@@ -18,11 +18,11 @@ import javax.mail.internet.MimeMultipart;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
+import org.sunbird.common.models.util.ConfigUtil;
 import org.sunbird.common.models.util.JsonKey;
 import org.sunbird.common.models.util.LoggerEnum;
 import org.sunbird.common.models.util.ProjectLogger;
 import org.sunbird.common.models.util.ProjectUtil;
-import org.sunbird.common.models.util.PropertiesCache;
 
 /**
  * this api is used to sending mail.
@@ -39,19 +39,13 @@ public class SendMail {
   private static String password;
   private static String fromEmail;
   static {
-    // collecting setup value from ENV
-    host = System.getenv(JsonKey.EMAIL_SERVER_HOST);
-    port = System.getenv(JsonKey.EMAIL_SERVER_PORT);
-    userName = System.getenv(JsonKey.EMAIL_SERVER_USERNAME);
-    password = System.getenv(JsonKey.EMAIL_SERVER_PASSWORD);
-    fromEmail = System.getenv(JsonKey.EMAIL_SERVER_FROM);
-    if (ProjectUtil.isStringNullOREmpty(host) || ProjectUtil.isStringNullOREmpty(port)
-        || ProjectUtil.isStringNullOREmpty(userName) || ProjectUtil.isStringNullOREmpty(password)
-        || ProjectUtil.isStringNullOREmpty(fromEmail)) {
-      ProjectLogger.log("Email setting value is not provided by Env variable==" + host + " " + port
+    host = ConfigUtil.config.getString(JsonKey.EMAIL_SERVER_HOST);
+    port = ConfigUtil.config.getString(JsonKey.EMAIL_SERVER_PORT);
+    userName = ConfigUtil.config.getString(JsonKey.EMAIL_SERVER_USERNAME);
+    password = ConfigUtil.config.getString(JsonKey.EMAIL_SERVER_PASSWORD);
+    fromEmail = ConfigUtil.config.getString(JsonKey.EMAIL_SERVER_FROM);
+    ProjectLogger.log("Email server configuration: " + host + " " + port
           + " " + fromEmail, LoggerEnum.INFO.name());
-      initialiseFromProperty();
-    }
     props = System.getProperties();
     props.put("mail.smtp.host", host);
     props.put("mail.smtp.socketFactory.port", port);
@@ -62,16 +56,6 @@ public class SendMail {
     props.put("mail.smtp.port", port);
   }
 
-  /**
-   * This method will initialize values from property files.
-   */
-  public static void initialiseFromProperty () {
-    host = PropertiesCache.getInstance().getProperty(JsonKey.EMAIL_SERVER_HOST);
-    port = PropertiesCache.getInstance().getProperty(JsonKey.EMAIL_SERVER_PORT);
-    userName = PropertiesCache.getInstance().getProperty(JsonKey.EMAIL_SERVER_USERNAME);
-    password = PropertiesCache.getInstance().getProperty(JsonKey.EMAIL_SERVER_PASSWORD);
-    fromEmail = PropertiesCache.getInstance().getProperty(JsonKey.EMAIL_SERVER_FROM);
-  }
   
   /**
    * this method is used to send email.

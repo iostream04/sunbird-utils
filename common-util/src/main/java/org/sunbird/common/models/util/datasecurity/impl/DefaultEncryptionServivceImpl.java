@@ -16,11 +16,11 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 import org.sunbird.common.exception.ProjectCommonException;
+import org.sunbird.common.models.util.ConfigUtil;
 import org.sunbird.common.models.util.JsonKey;
 import org.sunbird.common.models.util.LoggerEnum;
 import org.sunbird.common.models.util.ProjectLogger;
 import org.sunbird.common.models.util.ProjectUtil;
-import org.sunbird.common.models.util.PropertiesCache;
 import org.sunbird.common.models.util.datasecurity.EncryptionService;
 import org.sunbird.common.responsecode.ResponseCode;
 
@@ -39,10 +39,7 @@ public class DefaultEncryptionServivceImpl implements EncryptionService {
   private String sunbirdEncryption = "";
 
   public DefaultEncryptionServivceImpl() {
-    sunbirdEncryption = System.getenv(JsonKey.SUNBIRD_ENCRYPTION);
-    if (ProjectUtil.isStringNullOREmpty(sunbirdEncryption)) {
-      sunbirdEncryption = PropertiesCache.getInstance().getProperty(JsonKey.SUNBIRD_ENCRYPTION);
-    }
+    sunbirdEncryption = ConfigUtil.config.getString(JsonKey.SUNBIRD_ENCRYPTION);
   }
 
   @Override
@@ -140,11 +137,7 @@ public class DefaultEncryptionServivceImpl implements EncryptionService {
     if (!ProjectUtil.isStringNullOREmpty(encryption_key)) {
       return encryption_key;
     } else {
-      encryption_key = System.getenv(JsonKey.ENCRYPTION_KEY);
-      if (ProjectUtil.isStringNullOREmpty(encryption_key)) {
-        ProjectLogger.log("Salt value is not provided by Env");
-        encryption_key = PropertiesCache.getInstance().getProperty(JsonKey.ENCRYPTION_KEY);
-      }
+      encryption_key = ConfigUtil.config.getString(JsonKey.ENCRYPTION_KEY);
     }
     if (ProjectUtil.isStringNullOREmpty(encryption_key)) {
       ProjectLogger.log("throwing exception for invalid salt==", LoggerEnum.INFO.name());

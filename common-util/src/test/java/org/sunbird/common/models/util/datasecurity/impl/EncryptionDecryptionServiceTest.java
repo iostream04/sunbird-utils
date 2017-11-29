@@ -10,9 +10,8 @@ import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+import org.sunbird.common.models.util.ConfigUtil;
 import org.sunbird.common.models.util.JsonKey;
-import org.sunbird.common.models.util.ProjectUtil;
-import org.sunbird.common.models.util.PropertiesCache;
 import org.sunbird.common.models.util.datasecurity.DataMaskingService;
 import org.sunbird.common.models.util.datasecurity.DecryptionService;
 import org.sunbird.common.models.util.datasecurity.EncryptionService;
@@ -23,7 +22,7 @@ import org.sunbird.common.models.util.datasecurity.EncryptionService;
  *
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class EncryptionDecriptionServiceTest {
+public class EncryptionDecryptionServiceTest {
   
   private static String data = "hello sunbird";
   private static String encryptedData = "";
@@ -39,10 +38,7 @@ public class EncryptionDecriptionServiceTest {
   
   @BeforeClass
   public static void setUp() {
-    sunbirdEncryption  = System.getenv(JsonKey.SUNBIRD_ENCRYPTION);
-    if(ProjectUtil.isStringNullOREmpty(sunbirdEncryption)){
-      sunbirdEncryption = PropertiesCache.getInstance().getProperty(JsonKey.SUNBIRD_ENCRYPTION);
-    }
+    sunbirdEncryption = ConfigUtil.config.getString(JsonKey.SUNBIRD_ENCRYPTION);
     map = new HashMap<>();
     map.put(JsonKey.FIRST_NAME, "Amit");
     map.put(JsonKey.LAST_NAME, "KUMAR");

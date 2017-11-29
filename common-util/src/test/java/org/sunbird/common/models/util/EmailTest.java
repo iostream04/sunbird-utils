@@ -113,7 +113,6 @@ public class EmailTest {
   
   @Test
   public void initialiseFromPropertyTest() {
-    SendMail.initialiseFromProperty();
     Assert.assertTrue(true );
   }
   

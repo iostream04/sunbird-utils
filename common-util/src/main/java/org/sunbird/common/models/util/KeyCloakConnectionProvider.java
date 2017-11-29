@@ -17,7 +17,6 @@ import org.keycloak.admin.client.KeycloakBuilder;
 public class KeyCloakConnectionProvider {
   
    private static Keycloak keycloak; 
-   private static PropertiesCache cache = PropertiesCache.getInstance();
    public static String SSO_URL = null;
    public static String SSO_REALM = null;
    public static String CLIENT_ID = null;
@@ -36,71 +35,27 @@ public class KeyCloakConnectionProvider {
 	 */
   public static Keycloak initialiseConnection() throws Exception{
     ProjectLogger.log("key cloak instance is creation started.");
-    keycloak = initialiseEnvConnection();
-    if (keycloak != null) {
-      return keycloak;
-    }
     KeycloakBuilder keycloakBuilder = KeycloakBuilder.builder()
-        .serverUrl(cache.getProperty(JsonKey.SSO_URL)).realm(cache.getProperty(JsonKey.SSO_REALM))
-        .username(cache.getProperty(JsonKey.SSO_USERNAME))
-        .password(cache.getProperty(JsonKey.SSO_PASSWORD))
-        .clientId(cache.getProperty(JsonKey.SSO_CLIENT_ID))
+        .serverUrl(ConfigUtil.config.getString(JsonKey.SSO_URL)).realm(ConfigUtil.config.getString(JsonKey.SSO_REALM))
+        .username(ConfigUtil.config.getString(JsonKey.SSO_USERNAME))
+        .password(ConfigUtil.config.getString(JsonKey.SSO_PASSWORD))
+        .clientId(ConfigUtil.config.getString(JsonKey.SSO_CLIENT_ID))
         .resteasyClient(new ResteasyClientBuilder()
-            .connectionPoolSize(Integer.parseInt(cache.getProperty(JsonKey.SSO_POOL_SIZE)))
+            .connectionPoolSize(ConfigUtil.config.getInt(JsonKey.SSO_POOL_SIZE))
             .build());
-    if (cache.getProperty(JsonKey.SSO_CLIENT_SECRET) != null
-        && !(cache.getProperty(JsonKey.SSO_CLIENT_SECRET).equals(JsonKey.SSO_CLIENT_SECRET))) {
-      keycloakBuilder.clientSecret(cache.getProperty(JsonKey.SSO_CLIENT_SECRET));
+    if (ConfigUtil.config.getString(JsonKey.SSO_CLIENT_SECRET) != null
+        && !(ConfigUtil.config.getString(JsonKey.SSO_CLIENT_SECRET).equals(JsonKey.SSO_CLIENT_SECRET))) {
+      keycloakBuilder.clientSecret(ConfigUtil.config.getString(JsonKey.SSO_CLIENT_SECRET));
     }
-    SSO_URL = cache.getProperty(JsonKey.SSO_URL);
-    SSO_REALM = cache.getProperty(JsonKey.SSO_REALM);
-    CLIENT_ID = cache.getProperty(JsonKey.SSO_CLIENT_ID);
+    SSO_URL = ConfigUtil.config.getString(JsonKey.SSO_URL);
+    SSO_REALM = ConfigUtil.config.getString(JsonKey.SSO_REALM);
+    CLIENT_ID = ConfigUtil.config.getString(JsonKey.SSO_CLIENT_ID);
     keycloak = keycloakBuilder.build();
 
-	   ProjectLogger.log("key cloak instance is created successfully.");
-	   return keycloak;
-   }
-   
-  /**
-   * This method will provide the keycloak connection from 
-   * environment variable. if environment variable is not set
-   * then it will return null.
-   * @return Keycloak
-   */
-  private static Keycloak initialiseEnvConnection() throws Exception{
-    String url = System.getenv(JsonKey.SUNBIRD_SSO_URL);
-    String username = System.getenv(JsonKey.SUNBIRD_SSO_USERNAME);
-    String password = System.getenv(JsonKey.SUNBIRD_SSO_PASSWORD);
-    String cleintId = System.getenv(JsonKey.SUNBIRD_SSO_CLIENT_ID);
-    String cleintSecret = System.getenv(JsonKey.SUNBIRD_SSO_CLIENT_SECRET);
-    String relam = System.getenv(JsonKey.SUNBIRD_SSO_RELAM);
-    if (ProjectUtil.isStringNullOREmpty(url) || ProjectUtil.isStringNullOREmpty(username)
-        || ProjectUtil.isStringNullOREmpty(password) || ProjectUtil.isStringNullOREmpty(cleintId)
-        || ProjectUtil.isStringNullOREmpty(relam)) {
-      ProjectLogger.log("key cloak connection is not provided by Environment variable.",
-          LoggerEnum.INFO.name());
-      return null;
-    }
-    SSO_URL = url;
-    ProjectLogger.log("SSO url is==" + SSO_URL , LoggerEnum.INFO.name());
-    SSO_REALM = relam;
-    CLIENT_ID = cleintId;
-    KeycloakBuilder keycloakBuilder = KeycloakBuilder.builder().serverUrl(url).realm(relam)
-        .username(username).password(password).clientId(cleintId)
-        .resteasyClient(new ResteasyClientBuilder()
-            .connectionPoolSize(Integer.parseInt(cache.getProperty(JsonKey.SSO_POOL_SIZE)))
-            .build());
-
-    if (!ProjectUtil.isStringNullOREmpty(cleintSecret)) {
-      keycloakBuilder.clientSecret(cache.getProperty(JsonKey.SSO_CLIENT_SECRET));
-    }
-    keycloak = keycloakBuilder.build();
-    ProjectLogger.log("key cloak instance is created from Environment variable settings .",
-        LoggerEnum.INFO.name());
-    return keycloak;
-
+	ProjectLogger.log("key cloak instance is created successfully.");
+	return keycloak;
   }
-   
+  
   
    /**
 	 * This method will provide key cloak

@@ -16,7 +16,6 @@ public interface Constants {
 	public static final String CONTACT_POINT="contactPoint";
 	public static final String PORT="port";
 	public static final String QUERY_LOGGER_THRESHOLD="queryLoggerConstantThreshold";
-	public static final String CASSANDRA_PROPERTIES_FILE="cassandra.config.properties";
 	
 	
 	//CONSTANT

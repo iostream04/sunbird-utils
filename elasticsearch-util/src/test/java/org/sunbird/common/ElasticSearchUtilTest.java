@@ -1,15 +1,22 @@
 package org.sunbird.common;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import org.elasticsearch.client.transport.TransportClient;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import org.sunbird.common.models.util.JsonKey;
@@ -17,8 +24,6 @@ import org.sunbird.dto.SearchDTO;
 import org.sunbird.helper.ConnectionManager;
 import org.sunbird.helper.ElasticSearchMapping;
 import org.sunbird.helper.ElasticSearchSettings;
-
-import static org.junit.Assert.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ElasticSearchUtilTest {
     private static Map<String,Object> map = null;
@@ -87,6 +92,7 @@ public class ElasticSearchUtilTest {
         assertEquals(responseMap.get("courseName"), "updatedCourese name");
     }
 
+    @SuppressWarnings("rawtypes")
     @Test
     public void testComplexSearch(){
         SearchDTO searchDTO = new SearchDTO();
@@ -330,7 +336,7 @@ public class ElasticSearchUtilTest {
    
    @Test 
    public void failureConnectionTestFromProperties () {
-    boolean response = ConnectionManager.initialiseConnectionFromPropertiesFile("Test", "localhost", "localhost");
+    boolean response = ConnectionManager.initialiseConnection();
     assertFalse(response);
    }
    

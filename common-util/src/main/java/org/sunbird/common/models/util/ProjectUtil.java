@@ -41,8 +41,6 @@ public class ProjectUtil {
       "elasticsearch.config.properties", "cassandra.config.properties", "dbconfig.properties",
       "externalresource.properties", "sso.properties", "userencryption.properties",
       "profilecompleteness.properties", "mailTemplates.properties"};
-  public static final PropertiesCache propertiesCache = PropertiesCache.getInstance();
-
   /**
    * @author Manzarul
    */
@@ -574,20 +572,12 @@ public class ProjectUtil {
     context.put(JsonKey.BODY, map.get(JsonKey.BODY));
     map.remove(JsonKey.BODY);
     context.put(JsonKey.FROM_EMAIL,
-        ProjectUtil.isStringNullOREmpty(System.getenv(JsonKey.EMAIL_SERVER_FROM)) == false
-            ? System.getenv(JsonKey.EMAIL_SERVER_FROM)
-            : ((propertiesCache.getProperty(JsonKey.EMAIL_SERVER_FROM) != null)
-                ? propertiesCache.getProperty(JsonKey.EMAIL_SERVER_FROM) : ""));
+        ConfigUtil.config.getString(JsonKey.EMAIL_SERVER_FROM));
     context.put(JsonKey.ORG_NAME, (String) map.get(JsonKey.ORG_NAME));
     map.remove(JsonKey.ORG_NAME);
     // add image url in the mail
-    if (!ProjectUtil.isStringNullOREmpty(System.getenv(JsonKey.SUNBIRD_ENV_LOGO_URL))
-        || !ProjectUtil
-            .isStringNullOREmpty(propertiesCache.getProperty(JsonKey.SUNBIRD_ENV_LOGO_URL))) {
-      context.put(JsonKey.ORG_IMAGE_URL,
-          ProjectUtil.isStringNullOREmpty(System.getenv(JsonKey.SUNBIRD_ENV_LOGO_URL))
-              ? propertiesCache.getProperty(JsonKey.SUNBIRD_ENV_LOGO_URL)
-              : System.getenv(JsonKey.SUNBIRD_ENV_LOGO_URL));
+    if (!ConfigUtil.config.hasPath(JsonKey.SUNBIRD_ENV_LOGO_URL)) {
+      context.put(JsonKey.ORG_IMAGE_URL, ConfigUtil.config.getString(JsonKey.SUNBIRD_ENV_LOGO_URL));
     }
     context.put(JsonKey.ACTION_NAME, (String) map.get(JsonKey.ACTION_NAME));
     map.remove(JsonKey.ACTION_NAME);
@@ -675,8 +665,8 @@ public class ProjectUtil {
     try {
       ProjectLogger.log("start call for registering the tag ==" + tagId);
       tagStatus = HttpUtil.sendPostRequest(
-          PropertiesCache.getInstance().getProperty(JsonKey.EKSTEP_BASE_URL)
-              + PropertiesCache.getInstance().getProperty(JsonKey.EKSTEP_TAG_API_URL) + "/" + tagId,
+          ConfigUtil.config.getString(JsonKey.EKSTEP_BASE_URL)
+              + ConfigUtil.config.getString(JsonKey.EKSTEP_TAG_API_URL) + "/" + tagId,
           body, header);
       ProjectLogger
           .log("end call for tag registration id and status  ==" + tagId + " " + tagStatus);
@@ -740,12 +730,8 @@ public class ProjectUtil {
   
   public static Map<String,String> getEkstepHeader(){
     Map<String,String> headerMap = new HashMap<>();
-    String header = System.getenv(JsonKey.EKSTEP_AUTHORIZATION);
-      if (ProjectUtil.isStringNullOREmpty(header)) {
-        header = PropertiesCache.getInstance().getProperty(JsonKey.EKSTEP_AUTHORIZATION);
-      } else {
-        header = JsonKey.BEARER+header;
-      }
+    String header = ConfigUtil.config.getString(JsonKey.EKSTEP_AUTHORIZATION);
+       header = JsonKey.BEARER+header;
        headerMap.put(JsonKey.AUTHORIZATION, header);
        headerMap.put("Content-Type", "application/json");
     return headerMap;

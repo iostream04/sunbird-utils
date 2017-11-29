@@ -12,11 +12,11 @@ import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.settings.Settings.Builder;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
+import org.sunbird.common.models.util.ConfigUtil;
 import org.sunbird.common.models.util.JsonKey;
 import org.sunbird.common.models.util.LoggerEnum;
 import org.sunbird.common.models.util.ProjectLogger;
 import org.sunbird.common.models.util.ProjectUtil;
-import org.sunbird.common.models.util.PropertiesCache;
 
 /**
  * This class will manage connection.
@@ -71,63 +71,11 @@ public class ConnectionManager {
     * This method will read configuration data form properties file and update the list.
     * @return boolean
     */
-  private static boolean initialiseConnection() {
+  public static boolean initialiseConnection() {
     try {
-      if (initialiseConnectionFromEnv()) {
-        ProjectLogger.log("value found under system variable.");
-        return true;
-      }
-      PropertiesCache propertiesCache = PropertiesCache.getInstance();
-      String cluster = propertiesCache.getProperty("es.cluster.name");
-      String hostName = propertiesCache.getProperty("es.host.name");
-      String port = propertiesCache.getProperty("es.host.port");
-      return initialiseConnectionFromPropertiesFile(cluster, hostName, port);
-    } catch (Exception e) {
-      ProjectLogger.log("Error while initialising connection", e);
-      return false;
-    }
-  }
-	
-  /**
-   * This method will initialize the connection from 
-   * Resource properties file.
-   * @param cluster String cluster name
-   * @param hostName String host name
-   * @param port String port
-   * @return boolean
-   */
-  public static boolean initialiseConnectionFromPropertiesFile(String cluster,
-      String hostName, String port) {
-    try {
-      String splitedHost[] = hostName.split(",");
-      for (String val : splitedHost) {
-        host.add(val);
-      }
-      String splitedPort[] = port.split(",");
-      for (String val : splitedPort) {
-        ports.add(Integer.parseInt(val));
-      }
-      boolean response = createClient(cluster, host, ports);
-      ProjectLogger.log("ELASTIC SEARCH CONNECTION ESTABLISHED " + response,
-          LoggerEnum.INFO.name());
-    } catch (Exception e) {
-      ProjectLogger.log("Error while initialising connection", e);
-      return false;
-    }
-    return true;
-  }
-	
-	
-	
-	/**
-	    * This method will read configuration data form System environment variable.
-	    * @return boolean
-	    */
-	private static boolean initialiseConnectionFromEnv() {
-		try {
-			String cluster = System.getenv(JsonKey.SUNBIRD_ES_CLUSTER);
-			String hostName = System.getenv(JsonKey.SUNBIRD_ES_IP);
-			String port = System.getenv(JsonKey.SUNBIRD_ES_PORT);
+			String cluster = ConfigUtil.config.hasPath(JsonKey.SUNBIRD_ES_CLUSTER) ? ConfigUtil.config.getString(JsonKey.SUNBIRD_ES_CLUSTER): null;
+			String hostName = ConfigUtil.config.getString(JsonKey.SUNBIRD_ES_IP);
+			String port = ConfigUtil.config.getString(JsonKey.SUNBIRD_ES_PORT);
 			if(ProjectUtil.isStringNullOREmpty(hostName) || ProjectUtil.isStringNullOREmpty(port)) {
 				return false;
 			}

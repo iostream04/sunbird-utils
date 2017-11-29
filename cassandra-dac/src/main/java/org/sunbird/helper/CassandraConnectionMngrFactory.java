@@ -12,7 +12,7 @@ public class CassandraConnectionMngrFactory {
   private static Map<String , CassandraConnectionManager> connectionFactoryMap = new HashMap<>();
 
   /**
-   * Factory method to get the cassandra connection manager oject on basis of mode name pass in argument . default mode is standalone mode .
+   * Factory method to get the cassandra connection manager object on basis of mode name pass in argument . default mode is standalone mode .
    * @param name
    * @return
    */

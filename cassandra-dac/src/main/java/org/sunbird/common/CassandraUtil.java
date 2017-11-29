@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.sunbird.common.models.response.Response;
+import org.sunbird.common.models.util.ConfigUtil;
 import org.sunbird.common.models.util.JsonKey;
 import org.sunbird.common.models.util.ProjectLogger;
 import org.sunbird.common.models.util.ProjectUtil;
-import org.sunbird.common.models.util.PropertiesCache;
 import org.sunbird.common.responsecode.ResponseCode;
 
 /**
@@ -20,8 +20,6 @@ import org.sunbird.common.responsecode.ResponseCode;
  * @author Amit Kumar
  */
 public final class CassandraUtil {
-
-  private static final PropertiesCache instance = PropertiesCache.getInstance();
 
   private CassandraUtil() {}
 
@@ -71,7 +69,12 @@ public final class CassandraUtil {
       map = new HashMap<>();
       for (int i = 0; i < keyArray.length; i++) {
         int pos = keyArray[i].indexOf(Constants.OPEN_BRACE);
-        String column = instance.getProperty(keyArray[i].substring(0, pos).trim());
+        String column;
+        if(ConfigUtil.config.hasPath(keyArray[i].substring(0, pos).trim())){
+          column = ConfigUtil.config.getString(keyArray[i].substring(0, pos).trim());
+        }else{
+          column = keyArray[i].substring(0, pos).trim();
+        }
         map.put(column, row.getObject(column));
       }
       responseList.add(map);

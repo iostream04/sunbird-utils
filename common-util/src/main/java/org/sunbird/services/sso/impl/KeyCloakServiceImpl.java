@@ -26,6 +26,7 @@ import org.keycloak.representations.AccessToken;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.sunbird.common.exception.ProjectCommonException;
+import org.sunbird.common.models.util.ConfigUtil;
 import org.sunbird.common.models.util.HttpUtil;
 import org.sunbird.common.models.util.JsonKey;
 import org.sunbird.common.models.util.KeyCloakConnectionProvider;
@@ -46,7 +47,7 @@ public class KeyCloakServiceImpl implements SSOManager {
   private static final boolean IS_EMAIL_SETUP_COMPLETE = false;
   private static final String URL = KeyCloakConnectionProvider.SSO_URL + "realms/"
       + KeyCloakConnectionProvider.SSO_REALM + "/protocol/openid-connect/token";
-  private static final String SSO_PUBLIC_KEY = System.getenv(JsonKey.SSO_PUBLIC_KEY);
+  private static final String SSO_PUBLIC_KEY = ConfigUtil.config.getString(JsonKey.SSO_PUBLIC_KEY);
 
   @Override
   public String verifyToken(String accessToken) {

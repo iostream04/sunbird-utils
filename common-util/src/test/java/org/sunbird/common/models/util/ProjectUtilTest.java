@@ -8,14 +8,12 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.sunbird.common.models.util.JsonKey;
 import org.sunbird.common.models.util.ProjectUtil;
-import org.sunbird.common.models.util.PropertiesCache;
 
 /**
  * Created by arvind on 6/10/17.
  */
 public class ProjectUtilTest {
 
-  private  PropertiesCache propertiesCache = ProjectUtil.propertiesCache;
 
   @BeforeClass
   public static void setUp(){
@@ -51,16 +49,8 @@ public class ProjectUtilTest {
     templateMap.put(JsonKey.ACTION_URL, "googli.com");
     templateMap.put(JsonKey.NAME, "userName");
 
-
-    boolean envVal = !ProjectUtil.isStringNullOREmpty(System.getenv(JsonKey.EMAIL_SERVER_FROM));
-    boolean cacheVal = propertiesCache.getProperty(JsonKey.EMAIL_SERVER_FROM)!=null;
-
     VelocityContext context = ProjectUtil.getContext(templateMap);
-    if(envVal){
-      Assert.assertEquals(System.getenv(JsonKey.EMAIL_SERVER_FROM) , (String)context.internalGet(JsonKey.FROM_EMAIL));
-    }else if(cacheVal){
-      Assert.assertEquals(propertiesCache.getProperty(JsonKey.EMAIL_SERVER_FROM) , (String)context.internalGet(JsonKey.FROM_EMAIL));
-    }
+    Assert.assertEquals(ConfigUtil.config.getString(JsonKey.EMAIL_SERVER_FROM) , (String)context.internalGet(JsonKey.FROM_EMAIL));
 
   }
 
@@ -71,16 +61,8 @@ public class ProjectUtilTest {
     templateMap.put(JsonKey.ACTION_URL, "googli.com");
     templateMap.put(JsonKey.NAME, "userName");
 
-
-    boolean envVal = !ProjectUtil.isStringNullOREmpty(System.getenv(JsonKey.SUNBIRD_ENV_LOGO_URL));
-    boolean cacheVal = propertiesCache.getProperty(JsonKey.SUNBIRD_ENV_LOGO_URL)!=null;
-
     VelocityContext context = ProjectUtil.getContext(templateMap);
-    if(envVal){
-      Assert.assertEquals(System.getenv(JsonKey.SUNBIRD_ENV_LOGO_URL) , (String)context.internalGet(JsonKey.ORG_IMAGE_URL));
-    }else if(cacheVal){
-      Assert.assertEquals(propertiesCache.getProperty(JsonKey.SUNBIRD_ENV_LOGO_URL) , (String)context.internalGet(JsonKey.ORG_IMAGE_URL));
-    }
+    Assert.assertEquals(ConfigUtil.config.getString(JsonKey.SUNBIRD_ENV_LOGO_URL) , (String)context.internalGet(JsonKey.ORG_IMAGE_URL));
 
   }
 

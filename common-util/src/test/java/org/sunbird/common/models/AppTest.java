@@ -1,6 +1,5 @@
 package org.sunbird.common.models;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,10 +8,10 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.sunbird.common.models.util.ConfigUtil;
 import org.sunbird.common.models.util.HttpUtil;
 import org.sunbird.common.models.util.JsonKey;
 import org.sunbird.common.models.util.ProjectUtil;
-import org.sunbird.common.models.util.PropertiesCache;
 import org.sunbird.common.services.AssessmentEvaluator;
 import org.sunbird.common.services.impl.DefaultAssessmentEvaluator;
 
@@ -30,7 +29,7 @@ public class AppTest
 		headers.put("user-id", "mahesh");
 		 String header = System.getenv(JsonKey.EKSTEP_AUTHORIZATION);
 	        if (ProjectUtil.isStringNullOREmpty(header)) {
-	          header = PropertiesCache.getInstance().getProperty(JsonKey.EKSTEP_AUTHORIZATION);
+	          header = ConfigUtil.config.getString(JsonKey.EKSTEP_AUTHORIZATION);
 	        }
 		headers.put("authorization", "Bearer"+ header);
 	} 
@@ -176,7 +175,8 @@ public class AppTest
 		
 	}
 	
-	private Map<String, List<Map<String, Object>>> createEvaluateResultRequest() {
+	@SuppressWarnings("unused")
+  private Map<String, List<Map<String, Object>>> createEvaluateResultRequest() {
 		Map<String, List<Map<String, Object>>> map = new HashMap<>();
 		List<Map<String, Object>> list3 = new ArrayList<Map<String, Object>>();
 		Map<String, Object> assmntItem2 = new HashMap<>();

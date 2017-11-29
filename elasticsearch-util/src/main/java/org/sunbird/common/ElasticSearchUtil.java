@@ -53,11 +53,11 @@ import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms.Bucket;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.sort.SortOrder;
+import org.sunbird.common.models.util.ConfigUtil;
 import org.sunbird.common.models.util.JsonKey;
 import org.sunbird.common.models.util.LoggerEnum;
 import org.sunbird.common.models.util.ProjectLogger;
 import org.sunbird.common.models.util.ProjectUtil;
-import org.sunbird.common.models.util.PropertiesCache;
 import org.sunbird.dto.SearchDTO;
 import org.sunbird.helper.ConnectionManager;
 import org.sunbird.helper.ElasticSearchMapping;
@@ -411,6 +411,7 @@ public class ElasticSearchUtil {
    * @param type var arg of String
    * @return search result as Map.
    */
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   public static Map<String, Object> complexSearch(SearchDTO searchDTO, String index,
       String... type) {
     long startTime = System.currentTimeMillis();
@@ -423,7 +424,7 @@ public class ElasticSearchUtil {
     BoolQueryBuilder query = new BoolQueryBuilder();
 
     //add channel field as mandatory
-    String channel = PropertiesCache.getInstance().getProperty(JsonKey.SUNBIRD_ES_CHANNEL);
+    String channel = ConfigUtil.config.hasPath(JsonKey.SUNBIRD_ES_CHANNEL)? ConfigUtil.config.getString(JsonKey.SUNBIRD_ES_CHANNEL):"";
     if (!(ProjectUtil.isStringNullOREmpty(channel) || JsonKey.SUNBIRD_ES_CHANNEL.equals(channel))) {
       query.must(createMatchQuery(JsonKey.CHANNEL, channel, constraintsMap.get(JsonKey.CHANNEL)));
     }
@@ -615,7 +616,7 @@ public class ElasticSearchUtil {
   /**
    * Method to create CommonTermQuery , multimatch  and Range Query.
    */
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({ "unchecked", "rawtypes" })
   private static void createFilterESOpperation(Entry<String, Object> entry,
       BoolQueryBuilder query, Map<String, Float> constraintsMap) {
 
@@ -782,6 +783,7 @@ public class ElasticSearchUtil {
     }
   }
 
+  @SuppressWarnings({ "unchecked", "rawtypes" })
   private static TermsQueryBuilder createTermsQuery(String key, List values, Float boost) {
     if (isNotNull(boost)) {
       return QueryBuilders.termsQuery(key, (values).stream().toArray(Object[]::new)).boost(boost);
@@ -811,6 +813,7 @@ public class ElasticSearchUtil {
     return rangeQueryBuilder;
   }
 
+  @SuppressWarnings("unused")
   private static CommonTermsQueryBuilder createCommonTermsQuery(String name, Object text,
       Float boost) {
     if (isNotNull(boost)) {

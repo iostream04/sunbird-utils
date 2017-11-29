@@ -27,16 +27,16 @@ public class ActorUtility {
   private static void createConnection() {
     ProjectLogger.log("ActorUtility createConnection method start....");
     ActorSystem system =
-        ActorSystem.create("ActorApplication",ConfigFactory.load().getConfig("ActorConfig"));
+        ActorSystem.create("ActorApplication", ConfigUtil.config.getConfig("ActorConfig"));
     
-    String path = PropertiesCache.getInstance().getProperty("remote.actor.path");
+    String path = ConfigUtil.config.getString(JsonKey.REMOTE_ACTOR_PATH);
     try {
-      if (!ProjectUtil.isStringNullOREmpty(System.getenv(JsonKey.SUNBIRD_ACTOR_IP))
-          && !ProjectUtil.isStringNullOREmpty(System.getenv(JsonKey.SUNBIRD_ACTOR_PORT))) {
+      if (!ConfigUtil.config.hasPath(JsonKey.SUNBIRD_ACTOR_IP)
+          && !ConfigUtil.config.hasPath(JsonKey.SUNBIRD_ACTOR_PORT)) {
         ProjectLogger.log("value is taking from system env");
         path = MessageFormat.format(
-            PropertiesCache.getInstance().getProperty("remote.actor.env.path"),
-            System.getenv(JsonKey.SUNBIRD_ACTOR_IP), System.getenv(JsonKey.SUNBIRD_ACTOR_PORT));
+            ConfigUtil.config.getString(JsonKey.REMOTE_ACTOR_ENV_PATH),
+            ConfigUtil.config.getString(JsonKey.SUNBIRD_ACTOR_IP), ConfigUtil.config.getString(JsonKey.SUNBIRD_ACTOR_PORT));
       }
       ProjectLogger.log("Actor path is ==" + path, LoggerEnum.INFO.name());
     } catch (Exception e) {

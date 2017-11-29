@@ -11,10 +11,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
+
+import org.sunbird.common.models.util.ConfigUtil;
 import org.sunbird.common.models.util.JsonKey;
 import org.sunbird.common.models.util.ProjectLogger;
 import org.sunbird.common.models.util.ProjectUtil;
-import org.sunbird.common.models.util.PropertiesCache;
 import org.sunbird.common.models.util.datasecurity.DecryptionService;
 
 /**
@@ -27,10 +28,7 @@ public class DefaultDecryptionServiceImpl implements DecryptionService {
   private String sunbirdEncryption = "";
 
   public DefaultDecryptionServiceImpl() {
-    sunbirdEncryption = System.getenv(JsonKey.SUNBIRD_ENCRYPTION);
-    if (ProjectUtil.isStringNullOREmpty(sunbirdEncryption)) {
-      sunbirdEncryption = PropertiesCache.getInstance().getProperty(JsonKey.SUNBIRD_ENCRYPTION);
-    }
+    sunbirdEncryption = ConfigUtil.config.getString(JsonKey.SUNBIRD_ENCRYPTION);
   }
 
   @Override
