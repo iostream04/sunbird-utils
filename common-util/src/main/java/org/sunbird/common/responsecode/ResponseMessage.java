@@ -145,6 +145,7 @@ public interface ResponseMessage {
       String COURSE_CREATED_FOR_NULL = "Batch does not belong to any organization .";
       String COURSE_BATCH_START_PASSED_DATE_INVALID = "This Batch already started.";
       String UNABLE_TO_CONNECT_TO_EKSTEP = "Unable to connect to Ekstep Server";
+      String UNABLE_TO_CONNECT_TO_ES = "Unable to connect to Elastic Search";
       String INVALID_JSON = "Unable to process object to JSON/ JSON to Object";
       String EMPTY_CSV_FILE = "CSV file is Empty.";
       String INVALID_ROOT_ORG_DATA = "Root org doesn't exist for this Organization Id and channel {0}";
@@ -195,6 +196,7 @@ public interface ResponseMessage {
       String INVALID_CLIENT_ID = "Please provide valid client id";
       String USER_PHONE_UPDATE_FAILED = "user phone update is failed.";
       String ES_UPDATE_FAILED = "Data insertion to ES failed.";
+      String UPDATE_FAILED = "Data updation failed due to invalid Request";
       String INVALID_TYPE_VALUE = "Type value should be organisation OR location .";
       String INVALID_LOCATION_ID = "Please provide valid location id.";
       String INVALID_HASHTAG_ID = "Please provide different hashTagId.This HashTagId is associated with some other organization.";
@@ -204,6 +206,8 @@ public interface ResponseMessage {
       String INVALID_TOPIC_DATA = "Please provide valid notification data.";
       String INVALID_NOTIFICATION_TYPE = "Please provide a valid notification type.";
       String INVALID_NOTIFICATION_TYPE_SUPPORT = "Only notification type FCM is supported.";
+      String INVALID_PHONE_NUMBER = "Please send Phone and country code seprately.";
+      String INVALID_COUNTRY_CODE = "Please provide a valid country code.";
     }
     
     interface Key {
@@ -343,6 +347,7 @@ public interface ResponseMessage {
 		String INVALID_PROGRESS_STATUS = "INVALID_PROGRESS_STATUS";
 		String COURSE_BATCH_START_PASSED_DATE_INVALID = "COURSE_BATCH_START_PASSED_DATE_INVALID";
 		String UNABLE_TO_CONNECT_TO_EKSTEP = "UNABLE_TO_CONNECT_TO_EKSTEP";
+		String UNABLE_TO_CONNECT_TO_ES = "UNABLE_TO_CONNECT_TO_ES";
 		String INVALID_JSON = "INVALID_JSON";
 		String EMPTY_CSV_FILE = "EMPTY_CSV_FILE";
 		String INVALID_ROOT_ORG_DATA = "INVALID_ROOT_ORG_DATA";
@@ -393,6 +398,7 @@ public interface ResponseMessage {
         String INVALID_CLIENT_ID = "INVALID_CLIENT_ID";
         String USER_PHONE_UPDATE_FAILED = "USER_PHONE_UPDATE_FAILED";
         String ES_UPDATE_FAILED = "ES_UPDATE_FAILED";
+        String UPDATE_FAILED = "UPDATE_FAILED";
         String INVALID_TYPE_VALUE = "INVALID_TYPE_VALUE";
         String INVALID_LOCATION_ID = "INVALID_LOCATION_ID";
         String INVALID_HASHTAG_ID = "INVALID_HASHTAG_ID";
@@ -402,5 +408,8 @@ public interface ResponseMessage {
         String INVALID_TOPIC_DATA = "INVALID_TOPIC_DATA";
         String INVALID_NOTIFICATION_TYPE = "INVALID_NOTIFICATION_TYPE";
         String INVALID_NOTIFICATION_TYPE_SUPPORT = "INVALID_NOTIFICATION_TYPE_SUPPORT";
+        String INVALID_PHONE_NUMBER = "INVALID_PHONE_NUMBER";
+        String INVALID_COUNTRY_CODE = "INVALID_COUNTRY_CODE";
+        
     }
 }

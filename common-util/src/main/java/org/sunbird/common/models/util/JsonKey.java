@@ -248,9 +248,9 @@ public final class JsonKey {
   public static final String IS_DELETED = "isDeleted";
   public static final String PROFILE_SUMMARY = "profileSummary";
   public static final String ADDRESS_LINE1 = "addressLine1";
-  public static final String CITY = "city";  
-  public static final String LIST = "List";  
-  public static final String ADD_TYPE = "addType"; 
+  public static final String CITY = "city";
+  public static final String LIST = "List";
+  public static final String ADD_TYPE = "addType";
   public static final String ADDRESS_TYPE = "address type"; 
   public static final String DEGREE = "degree";
   public static final String JOB_NAME = "jobName";
@@ -466,6 +466,19 @@ public final class JsonKey {
   public static final String MESSAGE_Id = "message_id";
   public static final String FCM = "fcm";
   public static final String TOPICS ="topics";
+  public static final String EMAIL_VERIFIED_UPDATED = "emailVerifiedUpdated";
+  public static final String COUNTRY_CODE ="countryCode";
+  public static final String SYSTEM_SETTINGS_DB = "system_settings";
+  public static final String FIELD = "field";
+  public static final String VALUE = "value";
+  public static final String UNIQUE = "unique";
+  public static final String DUPLICATE = "duplicate";
+  public static final String ENDORSE_DATE = "endorseDate";
+  public static final String ENDORSERS_LIST = "endorsersList";
+  public static final String OPERATION_FOR = "operationFor";
+  public static final String ES_URL = "es_search_url";
+  public static final String ES_METRICS_PORT = "es_metrics_port";
+  public static final String SIZE = "size";
 
   //Properties keys
   public static final String SUNBIRD_ES_CHANNEL = "es.channel.name";

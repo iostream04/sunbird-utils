@@ -305,14 +305,14 @@ public class ElasticSearchUtilTest {
    
     @Test
     public void zRemoveDataByIdentifier() {
-         ElasticSearchUtil.removeData(indexName, typeName, (String)map.get("courseId"));
-        assertEquals(true, true);
+        boolean response = ElasticSearchUtil.removeData(indexName, typeName, (String)map.get("courseId"));
+        assertEquals(true, response);
     }
     
     @Test
     public void zyRemoveDataByIdentifierFailure() {
-         ElasticSearchUtil.removeData(indexName, typeName, "");
-        assertEquals(false, false);
+        boolean response = ElasticSearchUtil.removeData(indexName, typeName, "");
+        assertEquals(false, response);
     }
     
    @Test 
@@ -377,8 +377,9 @@ public class ElasticSearchUtilTest {
     data.put("test1", "test");
     try {
     Map<String,Object> map = ElasticSearchUtil.searchData(indexName, typeName, data);
+     assertTrue(map != null);
+     assertTrue(map.size()==0);
     } catch (Exception e) {
-      
     }
   }
   @Test

@@ -46,6 +46,7 @@ public enum ResponseCode {
     organisationNameRequired(ResponseMessage.Key.ORGANISATION_NAME_MISSING, ResponseMessage.Message.ORGANISATION_NAME_MISSING),
     channelUniquenessInvalid(ResponseMessage.Key.CHANNEL_SHOULD_BE_UNIQUE, ResponseMessage.Message.CHANNEL_SHOULD_BE_UNIQUE),
     unableToConnect(ResponseMessage.Key.UNABLE_TO_CONNECT_TO_EKSTEP, ResponseMessage.Message.UNABLE_TO_CONNECT_TO_EKSTEP),
+    unableToConnectToES(ResponseMessage.Key.UNABLE_TO_CONNECT_TO_ES, ResponseMessage.Message.UNABLE_TO_CONNECT_TO_ES),
     invalidJsonData(ResponseMessage.Key.INVALID_JSON,ResponseMessage.Message.INVALID_JSON),
     invalidOrgData(ResponseMessage.Key.INVALID_ORG_DATA, ResponseMessage.Message.INVALID_ORG_DATA),
     invalidRootOrganisationId(ResponseMessage.Key.INVALID_ROOT_ORGANIZATION, ResponseMessage.Message.INVALID_ROOT_ORGANIZATION),
@@ -194,6 +195,7 @@ public enum ResponseCode {
     invalidClientId(ResponseMessage.Key.INVALID_CLIENT_ID, ResponseMessage.Message.INVALID_CLIENT_ID),
     userPhoneUpdateFailed(ResponseMessage.Key.USER_PHONE_UPDATE_FAILED, ResponseMessage.Message.USER_PHONE_UPDATE_FAILED),
     esUpdateFailed(ResponseMessage.Key.ES_UPDATE_FAILED, ResponseMessage.Message.ES_UPDATE_FAILED),
+    updateFailed(ResponseMessage.Key.UPDATE_FAILED, ResponseMessage.Message.UPDATE_FAILED),
     invalidTypeValue(ResponseMessage.Key.INVALID_TYPE_VALUE , ResponseMessage.Key.INVALID_TYPE_VALUE),
     invalidLocationId(ResponseMessage.Key.INVALID_LOCATION_ID, ResponseMessage.Message.INVALID_LOCATION_ID),
     invalidHashTagId(ResponseMessage.Key.INVALID_HASHTAG_ID, ResponseMessage.Message.INVALID_HASHTAG_ID),
@@ -203,6 +205,9 @@ public enum ResponseCode {
     invalidTopicData(ResponseMessage.Key.INVALID_TOPIC_DATA,ResponseMessage.Message.INVALID_TOPIC_DATA),
     invalidNotificationType(ResponseMessage.Key.INVALID_NOTIFICATION_TYPE,ResponseMessage.Message.INVALID_NOTIFICATION_TYPE),
     notificationTypeSupport(ResponseMessage.Key.INVALID_NOTIFICATION_TYPE_SUPPORT,ResponseMessage.Message.INVALID_NOTIFICATION_TYPE_SUPPORT),
+    emailInUse(ResponseMessage.Key.EMAIL_IN_USE, ResponseMessage.Message.EMAIL_IN_USE),
+    invalidPhoneNumber(ResponseMessage.Key.INVALID_PHONE_NUMBER, ResponseMessage.Message.INVALID_PHONE_NUMBER),
+    invalidCountryCode(ResponseMessage.Key.INVALID_COUNTRY_CODE, ResponseMessage.Message.INVALID_COUNTRY_CODE),
     OK(200), CLIENT_ERROR(400), SERVER_ERROR(500), RESOURCE_NOT_FOUND(404),UNAUTHORIZED(401),REDIRECTION_REQUIRED(302);
 	
 	private int responseCode;

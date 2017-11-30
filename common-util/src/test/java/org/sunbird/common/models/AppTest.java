@@ -1,5 +1,6 @@
 package org.sunbird.common.models;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,19 +32,19 @@ public class AppTest
 	        if (ProjectUtil.isStringNullOREmpty(header)) {
 	          header = ConfigUtil.config.getString(JsonKey.EKSTEP_AUTHORIZATION);
 	        }
-		headers.put("authorization", "Bearer"+ header);
+		headers.put("authorization", "Bearer "+ header);
 	} 
     
 	
 	@Test
 	public void testGetResourceMethod() throws Exception{
-		String response = HttpUtil.sendGetRequest("https://dev.ekstep.in/api/learning/v3/content/numeracy_377", headers);
+		String response = HttpUtil.sendGetRequest("https://qa.ekstep.in/api/content/v3/read/test", headers);
 		Assert.assertNotNull(response);
 	}
 	
 	@Test
 	public void testPostResourceMethod() throws Exception {
-		String response = HttpUtil.sendPostRequest("https://dev.ekstep.in/api/learning/v3/content/list", data, headers);
+		String response = HttpUtil.sendPostRequest("https://qa.ekstep.in/api/content/v3/list", data, headers);
 		Assert.assertNotNull(response);
 	}
 	
@@ -52,11 +53,11 @@ public class AppTest
 		//passing wrong url
 		String response=null;
 		try {
-			response = HttpUtil.sendPostRequest("https://dev.ekstep.in/api/learning/v3/content/list", data, headers);
+			response = HttpUtil.sendPostRequest("https://qa.ekstep.in/api/content/wrong/v3/list", data, headers);
 		} catch (Exception e) {
-			
+			Assert.assertTrue(e instanceof FileNotFoundException);
 		}
-		Assert.assertNotNull(response);
+		Assert.assertNull(response);
 	}
 	
 	//@Test
