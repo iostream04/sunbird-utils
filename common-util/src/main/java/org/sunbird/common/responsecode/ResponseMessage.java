@@ -146,10 +146,11 @@ public interface ResponseMessage {
       String COURSE_BATCH_START_PASSED_DATE_INVALID = "This Batch already started.";
       String UNABLE_TO_CONNECT_TO_EKSTEP = "Unable to connect to Ekstep Server";
       String UNABLE_TO_CONNECT_TO_ES = "Unable to connect to Elastic Search";
+      String UNABLE_TO_PARSE_DATA = "Unable to parse the data";
       String INVALID_JSON = "Unable to process object to JSON/ JSON to Object";
       String EMPTY_CSV_FILE = "CSV file is Empty.";
       String INVALID_ROOT_ORG_DATA = "Root org doesn't exist for this Organization Id and channel {0}";
-        String NO_DATA = "No sufficient data for fetching the results";
+      String NO_DATA = "No sufficient data for fetching the results";
       String INVALID_CHANNEL = "Channel value is invalid.";
       String INVALID_PROCESS_ID = "Invalid Process Id.";
       String EMAIL_SUBJECT_ERROR = "Email Subject is mandatory.";
@@ -208,6 +209,8 @@ public interface ResponseMessage {
       String INVALID_NOTIFICATION_TYPE_SUPPORT = "Only notification type FCM is supported.";
       String INVALID_PHONE_NUMBER = "Please send Phone and country code seprately.";
       String INVALID_COUNTRY_CODE = "Please provide a valid country code.";
+      String DUPLICATE_PHONE_DATA = "System contains duplicate entry for {0}.";
+      String DUPLICATE_EMAIL_DATA = "System contains duplicate entry for {0}.";
     }
     
     interface Key {
@@ -348,6 +351,7 @@ public interface ResponseMessage {
 		String COURSE_BATCH_START_PASSED_DATE_INVALID = "COURSE_BATCH_START_PASSED_DATE_INVALID";
 		String UNABLE_TO_CONNECT_TO_EKSTEP = "UNABLE_TO_CONNECT_TO_EKSTEP";
 		String UNABLE_TO_CONNECT_TO_ES = "UNABLE_TO_CONNECT_TO_ES";
+		String UNABLE_TO_PARSE_DATA = "UNABLE_TO_PARSE_DATA";
 		String INVALID_JSON = "INVALID_JSON";
 		String EMPTY_CSV_FILE = "EMPTY_CSV_FILE";
 		String INVALID_ROOT_ORG_DATA = "INVALID_ROOT_ORG_DATA";
@@ -410,6 +414,8 @@ public interface ResponseMessage {
         String INVALID_NOTIFICATION_TYPE_SUPPORT = "INVALID_NOTIFICATION_TYPE_SUPPORT";
         String INVALID_PHONE_NUMBER = "INVALID_PHONE_NUMBER";
         String INVALID_COUNTRY_CODE = "INVALID_COUNTRY_CODE";
+        String DUPLICATE_PHONE_DATA = "DUPLICATE_PHONE_DATA";
+        String DUPLICATE_EMAIL_DATA = "DUPLICATE_EMAIL_DATA";
         
     }
 }

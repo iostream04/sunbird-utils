@@ -479,6 +479,8 @@ public final class JsonKey {
   public static final String ES_URL = "es_search_url";
   public static final String ES_METRICS_PORT = "es_metrics_port";
   public static final String SIZE = "size";
+  public static final String PHONE_UNIQUE = "phoneUnique";
+  public static final String EMAIL_UNIQUE = "emailUnique";
 
   //Properties keys
   public static final String SUNBIRD_ES_CHANNEL = "es.channel.name";
