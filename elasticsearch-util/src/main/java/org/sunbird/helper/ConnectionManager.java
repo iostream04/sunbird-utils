@@ -27,9 +27,6 @@ public class ConnectionManager {
 	private static TransportClient client = null;
 	private static List<String> host = new ArrayList<>();
 	private static List<Integer> ports = new ArrayList<>();
-	private static String cluster = ConfigUtil.config.getString("es.cluster.name");
-	private static String hostName = ConfigUtil.config.getString("es.host.name");
-	private static String port = ConfigUtil.config.getString("es.host.port");
 	static {
 		initialiseConnection();
 		registerShutDownHook();
