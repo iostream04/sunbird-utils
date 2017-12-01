@@ -43,8 +43,7 @@ public class KeyCloakConnectionProvider {
         .resteasyClient(new ResteasyClientBuilder()
             .connectionPoolSize(ConfigUtil.config.getInt(JsonKey.SSO_POOL_SIZE))
             .build());
-    if (ConfigUtil.config.getString(JsonKey.SSO_CLIENT_SECRET) != null
-        && !(ConfigUtil.config.getString(JsonKey.SSO_CLIENT_SECRET).equals(JsonKey.SSO_CLIENT_SECRET))) {
+    if (ConfigUtil.config.hasPath(JsonKey.SSO_CLIENT_SECRET)) {
       keycloakBuilder.clientSecret(ConfigUtil.config.getString(JsonKey.SSO_CLIENT_SECRET));
     }
     SSO_URL = ConfigUtil.config.getString(JsonKey.SSO_URL);
