@@ -12,12 +12,12 @@ import java.util.List;
 import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.sunbird.common.exception.ProjectCommonException;
+import org.sunbird.common.models.util.ConfigUtil;
 import org.sunbird.common.models.util.JsonKey;
 import org.sunbird.common.models.util.ProjectLogger;
 import org.sunbird.common.models.util.ProjectUtil;
 import org.sunbird.common.models.util.ProjectUtil.AddressType;
 import org.sunbird.common.models.util.ProjectUtil.ProgressStatus;
-import org.sunbird.common.models.util.PropertiesCache;
 import org.sunbird.common.responsecode.ResponseCode;
 
 
@@ -1175,8 +1175,8 @@ public final class RequestValidator {
   }
 
   public static void validateUpdateSystemSettingsRequest(Request request) {
-    List<String> list = new ArrayList<>(Arrays.asList(
-        PropertiesCache.getInstance().getProperty("system_settings_properties").split(",")));
+    List<String> list = 
+        ConfigUtil.config.getStringList("system_settings_properties");
     for(String str : request.getRequest().keySet()){
       if (!list.contains(str)) {
         throw new ProjectCommonException(ResponseCode.invalidPropertyError.getErrorCode(),

@@ -30,7 +30,6 @@ public class CassandraTest {
   private CassandraOperation operation = ServiceFactory.getInstance();
   static Map<String,Object> address = null;
   static Map<String,Object> dummyAddress = null;
-  static PropertiesCache cach = PropertiesCache.getInstance();
   static String host = ConfigUtil.config.getString("contactPoint");
   static String port = ConfigUtil.config.getString("port");
   static String cassandraKeySpace = ConfigUtil.config.getString("keyspace");
