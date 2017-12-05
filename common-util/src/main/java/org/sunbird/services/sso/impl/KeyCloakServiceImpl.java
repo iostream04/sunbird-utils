@@ -188,7 +188,6 @@ public class KeyCloakServiceImpl implements SSOManager {
       }
       map.put(JsonKey.EMAIL_VERIFIED_UPDATED, list);
       ur.setAttributes(map);
-      verifyEmail(userId);
     }
     if (isNotNull(request.get(JsonKey.USERNAME))) {
       if (isNotNull(request.get(JsonKey.PROVIDER))) {
@@ -233,6 +232,9 @@ public class KeyCloakServiceImpl implements SSOManager {
       // then no need to make api call to keycloak to update profile.
       if (needTobeUpdate) {
         resource.update(ur);
+        if (isNotNull(request.get(JsonKey.EMAIL))) {
+          verifyEmail(userId);
+        }
       }
     } catch (Exception ex) {
       throw new ProjectCommonException(ResponseCode.invalidUsrData.getErrorCode(),
@@ -580,30 +582,27 @@ public class KeyCloakServiceImpl implements SSOManager {
   }
 
   /**
-   * This method will do the user password update. it will send verify email link to user if
-   * IS_EMAIL_SETUP_COMPLETE value is true , by default it's false.
-   * 
+   * This method will do the user password update.
    * @param userId String
    * @param password String
+   * @return boolean true/false
    */
-  private void doPasswordUpdate(String userId, String password) {
+  @Override
+  public boolean doPasswordUpdate(String userId, String password) {
+	 boolean response = false;
+	try {  
     UserResource resource =
         keycloak.realm(KeyCloakConnectionProvider.SSO_REALM).users().get(userId);
     CredentialRepresentation newCredential = new CredentialRepresentation();
-    UserRepresentation ur = resource.toRepresentation();
     newCredential.setValue(password);
     newCredential.setType(CredentialRepresentation.PASSWORD);
     newCredential.setTemporary(true);
     resource.resetPassword(newCredential);
-    try {
-      resource.update(ur);
-      if (IS_EMAIL_SETUP_COMPLETE) {
-        verifyEmail(userId);
-      }
+    response = true;
     } catch (Exception ex) {
-      throw new ProjectCommonException(ex.getMessage(), ex.getMessage(),
-          ResponseCode.CLIENT_ERROR.getResponseCode());
+     ProjectLogger.log(ex.getMessage(),ex);
     }
+	return response;
   }
 
 
