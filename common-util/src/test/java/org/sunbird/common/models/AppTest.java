@@ -28,10 +28,7 @@ public class AppTest
 		headers.put("content-type", "application/json");
 		headers.put("accept", "application/json");
 		headers.put("user-id", "mahesh");
-		 String header = System.getenv(JsonKey.EKSTEP_AUTHORIZATION);
-	        if (ProjectUtil.isStringNullOREmpty(header)) {
-	          header = ConfigUtil.config.getString(JsonKey.EKSTEP_AUTHORIZATION);
-	        }
+		String header = ConfigUtil.getString(JsonKey.EKSTEP_AUTHORIZATION);
 		headers.put("authorization", "Bearer "+ header);
 	} 
     

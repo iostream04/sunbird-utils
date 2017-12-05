@@ -46,7 +46,7 @@ public class KeyCloakServiceImpl implements SSOManager {
   private static final boolean IS_EMAIL_SETUP_COMPLETE = true;
   private static final String URL = KeyCloakConnectionProvider.SSO_URL + "realms/"
       + KeyCloakConnectionProvider.SSO_REALM + "/protocol/openid-connect/token";
-  private static final String SSO_PUBLIC_KEY = ConfigUtil.config.getString(JsonKey.SSO_PUBLIC_KEY);
+  private static final String SSO_PUBLIC_KEY = ConfigUtil.getString(JsonKey.SSO_PUBLIC_KEY);
 
   @Override
   public String verifyToken(String accessToken) {
@@ -222,7 +222,7 @@ public class KeyCloakServiceImpl implements SSOManager {
       if (!ProjectUtil.isStringNullOREmpty((String) request.get(JsonKey.COUNTRY_CODE))) {
         list.add((String) request.get(JsonKey.COUNTRY_CODE));
       }else{
-        list.add(ConfigUtil.config.getString("sunbird_default_country_code"));
+        list.add(ConfigUtil.getString("sunbird_default_country_code"));
       }
       map.put(JsonKey.COUNTRY_CODE, list);
       ur.setAttributes(map);
@@ -336,7 +336,7 @@ public class KeyCloakServiceImpl implements SSOManager {
         map = new HashMap<>();
       }
       List<String> list = new ArrayList<>();
-      list.add(ConfigUtil.config.getString("sunbird_default_country_code"));
+      list.add(ConfigUtil.getString("sunbird_default_country_code"));
       map.put(JsonKey.COUNTRY_CODE, list);
       ur.setAttributes(map);
     }
@@ -559,7 +559,7 @@ public class KeyCloakServiceImpl implements SSOManager {
       if (!ProjectUtil.isStringNullOREmpty((String) request.get(JsonKey.COUNTRY_CODE))) {
         list2.add((String) request.get(JsonKey.COUNTRY_CODE));
       }else{
-        list2.add(ConfigUtil.config.getString("sunbird_default_country_code"));
+        list2.add(ConfigUtil.getString("sunbird_default_country_code"));
       }
       map.put(JsonKey.COUNTRY_CODE, list2);
 

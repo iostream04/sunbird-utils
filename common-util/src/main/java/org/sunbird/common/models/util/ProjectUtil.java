@@ -575,12 +575,12 @@ public class ProjectUtil {
     context.put(JsonKey.BODY, map.get(JsonKey.BODY));
     map.remove(JsonKey.BODY);
     context.put(JsonKey.FROM_EMAIL,
-        ConfigUtil.config.getString(JsonKey.EMAIL_SERVER_FROM));
+        ConfigUtil.getString(JsonKey.EMAIL_SERVER_FROM));
     context.put(JsonKey.ORG_NAME, (String) map.get(JsonKey.ORG_NAME));
     map.remove(JsonKey.ORG_NAME);
     // add image url in the mail
     if (!ConfigUtil.config.hasPath(JsonKey.SUNBIRD_ENV_LOGO_URL)) {
-      context.put(JsonKey.ORG_IMAGE_URL, ConfigUtil.config.getString(JsonKey.SUNBIRD_ENV_LOGO_URL));
+      context.put(JsonKey.ORG_IMAGE_URL, ConfigUtil.getString(JsonKey.SUNBIRD_ENV_LOGO_URL));
     }
     context.put(JsonKey.ACTION_NAME, (String) map.get(JsonKey.ACTION_NAME));
     map.remove(JsonKey.ACTION_NAME);
@@ -668,8 +668,8 @@ public class ProjectUtil {
     try {
       ProjectLogger.log("start call for registering the tag ==" + tagId);
       tagStatus = HttpUtil.sendPostRequest(
-          ConfigUtil.config.getString(JsonKey.EKSTEP_BASE_URL)
-              + ConfigUtil.config.getString(JsonKey.EKSTEP_TAG_API_URL) + "/" + tagId,
+          ConfigUtil.getString(JsonKey.EKSTEP_BASE_URL)
+              + ConfigUtil.getString(JsonKey.EKSTEP_TAG_API_URL) + "/" + tagId,
           body, header);
       ProjectLogger
           .log("end call for tag registration id and status  ==" + tagId + " " + tagStatus);
@@ -733,7 +733,7 @@ public class ProjectUtil {
   
   public static Map<String,String> getEkstepHeader(){
     Map<String,String> headerMap = new HashMap<>();
-    String header = ConfigUtil.config.getString(JsonKey.EKSTEP_AUTHORIZATION);
+    String header = ConfigUtil.getString(JsonKey.EKSTEP_AUTHORIZATION);
        header = JsonKey.BEARER+header;
        headerMap.put(JsonKey.AUTHORIZATION, header);
        headerMap.put("Content-Type", "application/json");
@@ -744,7 +744,7 @@ public class ProjectUtil {
     PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();  
     try {  
         if(isStringNullOREmpty(countryCode)){
-          countryCode = ConfigUtil.config.getString("sunbird_default_country_code");
+          countryCode = ConfigUtil.getString("sunbird_default_country_code");
         }
          phone = countryCode+"-"+phone;
          PhoneNumber numberProto = phoneUtil.parse(phone, ""); 

@@ -30,10 +30,10 @@ public class CassandraTest {
   private CassandraOperation operation = ServiceFactory.getInstance();
   static Map<String,Object> address = null;
   static Map<String,Object> dummyAddress = null;
-  static String host = ConfigUtil.config.getString("contactPoint");
-  static String port = ConfigUtil.config.getString("port");
-  static String cassandraKeySpace = ConfigUtil.config.getString("keyspace");
-  private static CassandraConnectionManagerImpl connectionManager = (CassandraConnectionManagerImpl) CassandraConnectionMngrFactory.getObject(ConfigUtil.config.getString(JsonKey.SUNBIRD_CASSANDRA_MODE));
+  static String host = ConfigUtil.getString("contactPoint");
+  static String port = ConfigUtil.getString("port");
+  static String cassandraKeySpace = ConfigUtil.getString("keyspace");
+  private static CassandraConnectionManagerImpl connectionManager = (CassandraConnectionManagerImpl) CassandraConnectionMngrFactory.getObject(ConfigUtil.getString(JsonKey.SUNBIRD_CASSANDRA_MODE));
 
   @BeforeClass
   public static void init(){

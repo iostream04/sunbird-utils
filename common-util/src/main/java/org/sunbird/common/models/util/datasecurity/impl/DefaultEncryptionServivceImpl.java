@@ -39,7 +39,7 @@ public class DefaultEncryptionServivceImpl implements EncryptionService {
   private String sunbirdEncryption = "";
 
   public DefaultEncryptionServivceImpl() {
-    sunbirdEncryption = ConfigUtil.config.getString(JsonKey.SUNBIRD_ENCRYPTION);
+    sunbirdEncryption = ConfigUtil.getString(JsonKey.SUNBIRD_ENCRYPTION);
   }
 
   @Override
@@ -137,7 +137,7 @@ public class DefaultEncryptionServivceImpl implements EncryptionService {
     if (!ProjectUtil.isStringNullOREmpty(encryption_key)) {
       return encryption_key;
     } else {
-      encryption_key = ConfigUtil.config.getString(JsonKey.ENCRYPTION_KEY);
+      encryption_key = ConfigUtil.getString(JsonKey.ENCRYPTION_KEY);
     }
     if (ProjectUtil.isStringNullOREmpty(encryption_key)) {
       ProjectLogger.log("throwing exception for invalid salt==", LoggerEnum.INFO.name());

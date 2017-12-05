@@ -1178,7 +1178,7 @@ public final class RequestValidator {
 
   public static void validateUpdateSystemSettingsRequest(Request request) {
     List<String> list = 
-        ConfigUtil.config.getStringList("system_settings_properties");
+        ConfigUtil.getStringList("system_settings_properties");
     for(String str : request.getRequest().keySet()){
       if (!list.contains(str)) {
         throw new ProjectCommonException(ResponseCode.invalidPropertyError.getErrorCode(),

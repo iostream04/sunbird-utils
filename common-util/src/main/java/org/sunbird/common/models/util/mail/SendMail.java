@@ -39,11 +39,11 @@ public class SendMail {
   private static String password;
   private static String fromEmail;
   static {
-    host = ConfigUtil.config.getString(JsonKey.EMAIL_SERVER_HOST);
-    port = ConfigUtil.config.getString(JsonKey.EMAIL_SERVER_PORT);
-    userName = ConfigUtil.config.getString(JsonKey.EMAIL_SERVER_USERNAME);
-    password = ConfigUtil.config.getString(JsonKey.EMAIL_SERVER_PASSWORD);
-    fromEmail = ConfigUtil.config.getString(JsonKey.EMAIL_SERVER_FROM);
+    host = ConfigUtil.getString(JsonKey.EMAIL_SERVER_HOST);
+    port = ConfigUtil.getString(JsonKey.EMAIL_SERVER_PORT);
+    userName = ConfigUtil.getString(JsonKey.EMAIL_SERVER_USERNAME);
+    password = ConfigUtil.getString(JsonKey.EMAIL_SERVER_PASSWORD);
+    fromEmail = ConfigUtil.getString(JsonKey.EMAIL_SERVER_FROM);
     ProjectLogger.log("Email server configuration: " + host + " " + port
           + " " + fromEmail, LoggerEnum.INFO.name());
     props = System.getProperties();

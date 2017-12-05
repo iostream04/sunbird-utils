@@ -22,11 +22,11 @@ public class Notification {
   /**
    * FCM_URL URL of FCM server
    */
-  public static final String FCM_URL = ConfigUtil.config.getString(JsonKey.FCM_URL);
+  public static final String FCM_URL = ConfigUtil.getString(JsonKey.FCM_URL);
   /**
    * FCM_ACCOUNT_KEY FCM server key.
    */
-  private static final String FCM_ACCOUNT_KEY = ConfigUtil.config.getString(JsonKey.SUNBIRD_FCM_ACCOUNT_KEY);
+  private static final String FCM_ACCOUNT_KEY = ConfigUtil.getString(JsonKey.SUNBIRD_FCM_ACCOUNT_KEY);
   private static Map<String,String> headerMap = new HashMap<>();
   private static final String TOPIC_SUFFIX = "/topics/"; 
   static{

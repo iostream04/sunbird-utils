@@ -90,19 +90,19 @@ public class CassandraConnectionManagerImpl implements CassandraConnectionManage
       if (null == cassandraSessionMap.get(keyspace)) {
         PoolingOptions poolingOptions = new PoolingOptions();
         poolingOptions.setCoreConnectionsPerHost(HostDistance.LOCAL,
-            ConfigUtil.config.getInt(Constants.CORE_CONNECTIONS_PER_HOST_FOR_LOCAL));
+            ConfigUtil.getInt(Constants.CORE_CONNECTIONS_PER_HOST_FOR_LOCAL));
         poolingOptions.setMaxConnectionsPerHost(HostDistance.LOCAL,
-            ConfigUtil.config.getInt(Constants.MAX_CONNECTIONS_PER_HOST_FOR_LOCAl));
+            ConfigUtil.getInt(Constants.MAX_CONNECTIONS_PER_HOST_FOR_LOCAl));
         poolingOptions.setCoreConnectionsPerHost(HostDistance.REMOTE,
-            ConfigUtil.config.getInt(Constants.CORE_CONNECTIONS_PER_HOST_FOR_REMOTE));
+            ConfigUtil.getInt(Constants.CORE_CONNECTIONS_PER_HOST_FOR_REMOTE));
         poolingOptions.setMaxConnectionsPerHost(HostDistance.REMOTE,
-            ConfigUtil.config.getInt(Constants.MAX_CONNECTIONS_PER_HOST_FOR_REMOTE));
+            ConfigUtil.getInt(Constants.MAX_CONNECTIONS_PER_HOST_FOR_REMOTE));
         poolingOptions.setMaxRequestsPerConnection(HostDistance.LOCAL,
-            ConfigUtil.config.getInt(Constants.MAX_REQUEST_PER_CONNECTION));
+            ConfigUtil.getInt(Constants.MAX_REQUEST_PER_CONNECTION));
         poolingOptions.setHeartbeatIntervalSeconds(
-            ConfigUtil.config.getInt(Constants.HEARTBEAT_INTERVAL));
+            ConfigUtil.getInt(Constants.HEARTBEAT_INTERVAL));
         poolingOptions
-            .setPoolTimeoutMillis(ConfigUtil.config.getInt(Constants.POOL_TIMEOUT));
+            .setPoolTimeoutMillis(ConfigUtil.getInt(Constants.POOL_TIMEOUT));
         if (!ProjectUtil.isStringNullOREmpty(userName)
             && !ProjectUtil.isStringNullOREmpty(password)) {
           cluster = createCluster(ip, port, userName, password, poolingOptions);
@@ -110,7 +110,7 @@ public class CassandraConnectionManagerImpl implements CassandraConnectionManage
           cluster = createCluster(ip, port, poolingOptions);
         }
         QueryLogger queryLogger = QueryLogger.builder().withConstantThreshold(
-            ConfigUtil.config.getInt(Constants.QUERY_LOGGER_THRESHOLD)).build();
+            ConfigUtil.getInt(Constants.QUERY_LOGGER_THRESHOLD)).build();
         cluster.register(queryLogger);
         cassandraSession = cluster.connect(keyspace);
 
@@ -193,17 +193,17 @@ public class CassandraConnectionManagerImpl implements CassandraConnectionManage
     if (null == cassandraSessionMap.get(keyspace)) {
       try {
         EmbeddedCassandraServerHelper.startEmbeddedCassandra(
-            ConfigUtil.config.getLong(JsonKey.SUNBIRD_EMBEDDED_CASSANDRA_TIMEOUT));
+            ConfigUtil.getLong(JsonKey.SUNBIRD_EMBEDDED_CASSANDRA_TIMEOUT));
         Cluster cluster = new Cluster.Builder()
-            .addContactPoints(ConfigUtil.config.getString(JsonKey.EMBEDDED_CASSANDRA_HOST))
+            .addContactPoints(ConfigUtil.getString(JsonKey.EMBEDDED_CASSANDRA_HOST))
             .withPort(
-                ConfigUtil.config.getInt(JsonKey.EMBEDDED_CASSANDRA_PORT))
+                ConfigUtil.getInt(JsonKey.EMBEDDED_CASSANDRA_PORT))
             .build();
         cassandraSession = cluster.connect();
         CQLDataLoader dataLoader = new CQLDataLoader(cassandraSession);
         ProjectLogger.log("CASSANDRA EMBEDDED MODE - LOADING DATA");
         dataLoader.load(new ClassPathCQLDataSet(
-            ConfigUtil.config.getString(JsonKey.EMBEDDED_CQL_FILE_NAME), keyspace));
+            ConfigUtil.getString(JsonKey.EMBEDDED_CQL_FILE_NAME), keyspace));
         if (null != cassandraSession) {
           cassandraSessionMap.put(keyspace, cassandraSession);
           cassandraclusterMap.put(keyspace, cluster);

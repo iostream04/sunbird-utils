@@ -36,19 +36,19 @@ public class KeyCloakConnectionProvider {
   public static Keycloak initialiseConnection() throws Exception{
     ProjectLogger.log("key cloak instance is creation started.");
     KeycloakBuilder keycloakBuilder = KeycloakBuilder.builder()
-        .serverUrl(ConfigUtil.config.getString(JsonKey.SSO_URL)).realm(ConfigUtil.config.getString(JsonKey.SSO_REALM))
-        .username(ConfigUtil.config.getString(JsonKey.SSO_USERNAME))
-        .password(ConfigUtil.config.getString(JsonKey.SSO_PASSWORD))
-        .clientId(ConfigUtil.config.getString(JsonKey.SSO_CLIENT_ID))
+        .serverUrl(ConfigUtil.getString(JsonKey.SSO_URL)).realm(ConfigUtil.getString(JsonKey.SSO_REALM))
+        .username(ConfigUtil.getString(JsonKey.SSO_USERNAME))
+        .password(ConfigUtil.getString(JsonKey.SSO_PASSWORD))
+        .clientId(ConfigUtil.getString(JsonKey.SSO_CLIENT_ID))
         .resteasyClient(new ResteasyClientBuilder()
-            .connectionPoolSize(ConfigUtil.config.getInt(JsonKey.SSO_POOL_SIZE))
+            .connectionPoolSize(ConfigUtil.getInt(JsonKey.SSO_POOL_SIZE))
             .build());
     if (ConfigUtil.config.hasPath(JsonKey.SSO_CLIENT_SECRET)) {
-      keycloakBuilder.clientSecret(ConfigUtil.config.getString(JsonKey.SSO_CLIENT_SECRET));
+      keycloakBuilder.clientSecret(ConfigUtil.getString(JsonKey.SSO_CLIENT_SECRET));
     }
-    SSO_URL = ConfigUtil.config.getString(JsonKey.SSO_URL);
-    SSO_REALM = ConfigUtil.config.getString(JsonKey.SSO_REALM);
-    CLIENT_ID = ConfigUtil.config.getString(JsonKey.SSO_CLIENT_ID);
+    SSO_URL = ConfigUtil.getString(JsonKey.SSO_URL);
+    SSO_REALM = ConfigUtil.getString(JsonKey.SSO_REALM);
+    CLIENT_ID = ConfigUtil.getString(JsonKey.SSO_CLIENT_ID);
     keycloak = keycloakBuilder.build();
 
 	ProjectLogger.log("key cloak instance is created successfully.");

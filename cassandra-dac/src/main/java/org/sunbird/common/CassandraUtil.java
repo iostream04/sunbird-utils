@@ -71,7 +71,7 @@ public final class CassandraUtil {
         int pos = keyArray[i].indexOf(Constants.OPEN_BRACE);
         String column;
         if(ConfigUtil.config.hasPath(keyArray[i].substring(0, pos).trim())){
-          column = ConfigUtil.config.getString(keyArray[i].substring(0, pos).trim());
+          column = ConfigUtil.getString(keyArray[i].substring(0, pos).trim());
         }else{
           column = keyArray[i].substring(0, pos).trim();
         }

@@ -436,7 +436,7 @@ public class ElasticSearchUtil {
     BoolQueryBuilder query = new BoolQueryBuilder();
 
     //add channel field as mandatory
-    String channel = ConfigUtil.config.hasPath(JsonKey.SUNBIRD_ES_CHANNEL)? ConfigUtil.config.getString(JsonKey.SUNBIRD_ES_CHANNEL):"";
+    String channel = ConfigUtil.config.hasPath(JsonKey.SUNBIRD_ES_CHANNEL)? ConfigUtil.getString(JsonKey.SUNBIRD_ES_CHANNEL):"";
     if (!(ProjectUtil.isStringNullOREmpty(channel) || JsonKey.SUNBIRD_ES_CHANNEL.equals(channel))) {
       query.must(createMatchQuery(JsonKey.CHANNEL, channel, constraintsMap.get(JsonKey.CHANNEL)));
     }
@@ -964,8 +964,8 @@ public class ElasticSearchUtil {
   public static Response searchMetricsData(String index, String type, String rawQuery) {
     long startTime = System.currentTimeMillis();
     ProjectLogger.log("Metrics search method started at ==" + startTime, LoggerEnum.PERF_LOG);
-    List<String> ip = ConfigUtil.config.getStringList(JsonKey.SUNBIRD_ES_IP);
-    String baseUrl = "http://" + ip.get(0) + ":" + ConfigUtil.config.getString(JsonKey.ES_METRICS_PORT);
+    List<String> ip = ConfigUtil.getStringList(JsonKey.SUNBIRD_ES_IP);
+    String baseUrl = "http://" + ip.get(0) + ":" + ConfigUtil.getString(JsonKey.ES_METRICS_PORT);
     String requestURL = baseUrl + "/" + index + "/" + type + "/" + "_search";
     Map<String, String> headers = new HashMap<>();
     headers.put("Content-Type", "application/json");

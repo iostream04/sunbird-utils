@@ -29,14 +29,14 @@ public class ActorUtility {
     ActorSystem system =
         ActorSystem.create("ActorApplication", ConfigUtil.config.getConfig("ActorConfig"));
     
-    String path = ConfigUtil.config.getString(JsonKey.REMOTE_ACTOR_PATH);
+    String path = ConfigUtil.getString(JsonKey.REMOTE_ACTOR_PATH);
     try {
       if (!ConfigUtil.config.hasPath(JsonKey.SUNBIRD_ACTOR_IP)
           && !ConfigUtil.config.hasPath(JsonKey.SUNBIRD_ACTOR_PORT)) {
         ProjectLogger.log("value is taking from system env");
         path = MessageFormat.format(
-            ConfigUtil.config.getString(JsonKey.REMOTE_ACTOR_ENV_PATH),
-            ConfigUtil.config.getString(JsonKey.SUNBIRD_ACTOR_IP), ConfigUtil.config.getString(JsonKey.SUNBIRD_ACTOR_PORT));
+            ConfigUtil.getString(JsonKey.REMOTE_ACTOR_ENV_PATH),
+            ConfigUtil.getString(JsonKey.SUNBIRD_ACTOR_IP), ConfigUtil.getString(JsonKey.SUNBIRD_ACTOR_PORT));
       }
       ProjectLogger.log("Actor path is ==" + path, LoggerEnum.INFO.name());
     } catch (Exception e) {

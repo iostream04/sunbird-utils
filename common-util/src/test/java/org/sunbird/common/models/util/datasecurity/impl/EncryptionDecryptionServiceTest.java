@@ -38,7 +38,7 @@ public class EncryptionDecryptionServiceTest {
   
   @BeforeClass
   public static void setUp() {
-    sunbirdEncryption = ConfigUtil.config.getString(JsonKey.SUNBIRD_ENCRYPTION);
+    sunbirdEncryption = ConfigUtil.getString(JsonKey.SUNBIRD_ENCRYPTION);
     map = new HashMap<>();
     map.put(JsonKey.FIRST_NAME, "Amit");
     map.put(JsonKey.LAST_NAME, "KUMAR");

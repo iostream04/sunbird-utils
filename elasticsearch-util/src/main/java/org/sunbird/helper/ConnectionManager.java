@@ -72,9 +72,9 @@ public class ConnectionManager {
     */
   public static boolean initialiseConnection() {
     try {
-			String cluster = ConfigUtil.config.hasPath(JsonKey.SUNBIRD_ES_CLUSTER) ? ConfigUtil.config.getString(JsonKey.SUNBIRD_ES_CLUSTER): null;
-			String hostName = ConfigUtil.config.getString(JsonKey.SUNBIRD_ES_IP);
-			String port = ConfigUtil.config.getString(JsonKey.SUNBIRD_ES_PORT);
+			String cluster = ConfigUtil.config.hasPath(JsonKey.SUNBIRD_ES_CLUSTER) ? ConfigUtil.getString(JsonKey.SUNBIRD_ES_CLUSTER): null;
+			String hostName = ConfigUtil.getString(JsonKey.SUNBIRD_ES_IP);
+			String port = ConfigUtil.getString(JsonKey.SUNBIRD_ES_PORT);
 			if(ProjectUtil.isStringNullOREmpty(hostName) || ProjectUtil.isStringNullOREmpty(port)) {
 				return false;
 			}

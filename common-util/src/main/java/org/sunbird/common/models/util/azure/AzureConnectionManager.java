@@ -31,8 +31,8 @@ public class AzureConnectionManager {
   private static String  storageAccountString;
   private static AzureConnectionManager connectionManager;
   static {
-    accountName = ConfigUtil.config.getString(JsonKey.ACCOUNT_NAME);
-    accountKey =  ConfigUtil.config.getString(JsonKey.ACCOUNT_KEY);
+    accountName = ConfigUtil.getString(JsonKey.ACCOUNT_NAME);
+    accountKey =  ConfigUtil.getString(JsonKey.ACCOUNT_KEY);
     ProjectLogger.log(
         "Azure account name and key is"
             + accountName + " " + accountKey);

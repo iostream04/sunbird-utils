@@ -40,7 +40,7 @@ public class CassandraOperationImpl implements CassandraOperation {
   private CassandraConnectionManager connectionManager;
 
   public CassandraOperationImpl() {
-    String cassandraMode = ConfigUtil.config.getString(JsonKey.SUNBIRD_CASSANDRA_MODE);
+    String cassandraMode = ConfigUtil.getString(JsonKey.SUNBIRD_CASSANDRA_MODE);
     connectionManager = CassandraConnectionMngrFactory.getObject(cassandraMode);
   }
 

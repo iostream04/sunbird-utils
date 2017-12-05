@@ -50,7 +50,7 @@ public class ProjectUtilTest {
     templateMap.put(JsonKey.NAME, "userName");
 
     VelocityContext context = ProjectUtil.getContext(templateMap);
-    Assert.assertEquals(ConfigUtil.config.getString(JsonKey.EMAIL_SERVER_FROM) , (String)context.internalGet(JsonKey.FROM_EMAIL));
+    Assert.assertEquals(ConfigUtil.getString(JsonKey.EMAIL_SERVER_FROM) , (String)context.internalGet(JsonKey.FROM_EMAIL));
 
   }
 
@@ -62,7 +62,7 @@ public class ProjectUtilTest {
     templateMap.put(JsonKey.NAME, "userName");
 
     VelocityContext context = ProjectUtil.getContext(templateMap);
-    Assert.assertEquals(ConfigUtil.config.getString(JsonKey.SUNBIRD_ENV_LOGO_URL) , (String)context.internalGet(JsonKey.ORG_IMAGE_URL));
+    Assert.assertEquals(ConfigUtil.getString(JsonKey.SUNBIRD_ENV_LOGO_URL) , (String)context.internalGet(JsonKey.ORG_IMAGE_URL));
 
   }
 

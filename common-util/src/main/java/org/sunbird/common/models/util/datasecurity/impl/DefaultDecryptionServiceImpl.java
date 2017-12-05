@@ -28,7 +28,7 @@ public class DefaultDecryptionServiceImpl implements DecryptionService {
   private String sunbirdEncryption = "";
 
   public DefaultDecryptionServiceImpl() {
-    sunbirdEncryption = ConfigUtil.config.getString(JsonKey.SUNBIRD_ENCRYPTION);
+    sunbirdEncryption = ConfigUtil.getString(JsonKey.SUNBIRD_ENCRYPTION);
   }
 
   @Override

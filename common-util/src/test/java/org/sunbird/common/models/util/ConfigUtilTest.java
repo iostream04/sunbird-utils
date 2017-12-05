@@ -14,7 +14,7 @@ public class ConfigUtilTest {
     Config conf = ConfigFactory.load("test.properties");
     ConfigUtil.loadProperties(conf);
     Assert.assertTrue(ConfigUtil.config.hasPath("test.id"));
-    Assert.assertEquals("testing", ConfigUtil.config.getString("test.id"));
+    Assert.assertEquals("testing", ConfigUtil.getString("test.id"));
   }
 
 }
