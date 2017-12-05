@@ -187,9 +187,9 @@
       </plugins>
     </pluginManagement>
 
-    <plugins>
+    <!--<plugins>
 
-      <!-- <plugin>
+       <plugin>
         <groupId>org.openclover</groupId>
         <artifactId>clover-maven-plugin</artifactId>
         <version>4.2.0</version>
@@ -206,9 +206,9 @@
             </goals>
           </execution>
         </executions>
-      </plugin> -->
+      </plugin> 
 
-    </plugins>
+    </plugins>-->
   </build>
 
  <!--  <reporting>
