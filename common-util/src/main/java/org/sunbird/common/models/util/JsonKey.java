@@ -177,6 +177,7 @@ public final class JsonKey {
   public static final String EDUCATION = "education";
   public static final String EDUCATION_DB = "user_education";
   public static final String EKS = "eks";
+  public static final String ANALYTICS_API_BASE_URL="analytics_api_base_url";
   public static final String EKSTEP_AUTHORIZATION = "ekstep_authorization";
   public static final String EKSTEP_BASE_URL = "ekstep_api_base_url";
   public static final String EKSTEP_CHANNEL_REG_API_URL = "ekstep.channel.reg.api.url";
@@ -186,10 +187,9 @@ public final class JsonKey {
   public static final String EKSTEP_CONTENT_SEARCH_URL = "ekstep_content_search_url";
   public static final String EKSTEP_CONTENT_UPDATE_URL = "ekstep.content.update.url";
   public static final String EKSTEP_CONTENT_URL = "content_url";
-  public static final String EKSTEP_COURSE_PUBLISH_URL = "ekstep_course_publish_url";
   public static final String EKSTEP_DOMAIN_URL = "ekstep_domain_url";
-  public static final String EKSTEP_ES_METRICS_API_URL = "ekstep_es_metrics_api_url";
   public static final String EKSTEP_GET_CHANNEL_LIST = "ekstep.channel.list.api.url";
+  public static final String EKSTEP_ES_METRICS_API_URL = "ekstep_es_metrics_api_url";
   public static final String EKSTEP_METRICS_API_URL = "ekstep_metrics_api_url";
   public static final String EKSTEP_METRICS_AUTHORIZATION = "ekstep_metrics_authorization";
   public static final String EKSTEP_METRICS_URL = "ekstep_metrics_base_url";
